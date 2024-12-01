@@ -1,0 +1,16 @@
+[project]
+name = "advent-of-code"
+version = "0.1.0"
+description = "Solutions to the Advent of Code challenges"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = []
+
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4.0.1",
+    "pyright>=1.1.387",
+    "pytest>=8.3.3",
+    "ruff>=0.7.2",
+]
