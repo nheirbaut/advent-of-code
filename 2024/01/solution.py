@@ -1,3 +1,5 @@
+from collections import Counter
+
 def calculate_total_distance(left_list: list[int], right_list: list[int]) -> int:
     if len(left_list) != len(right_list):
         raise ValueError("Lists must be of the same length")
@@ -5,13 +7,7 @@ def calculate_total_distance(left_list: list[int], right_list: list[int]) -> int
     return sum(abs(left - right) for left, right in zip(sorted(left_list), sorted(right_list)))
 
 def calculate_similarity_score(left_list: list[int], right_list: list[int]) -> int:
-    frequency_table: dict[int, int] = {}
-
-    for num in right_list:
-        if num in frequency_table:
-            frequency_table[num] += 1
-        else:
-            frequency_table[num] = 1
+    frequency_table = Counter(right_list)
 
     total: int = 0
     for num in left_list:
