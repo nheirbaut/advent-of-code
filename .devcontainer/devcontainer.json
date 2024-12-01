@@ -1,0 +1,49 @@
+{
+	"name": "Python Utils",
+	"image": "python:3.12-bookworm",
+	"features": {
+		"ghcr.io/devcontainers/features/common-utils:2": {
+			"installZsh": "true",
+			"configureZshAsDefaultShell": "true",
+			"installOhMyZsh": "false",
+			"installOhMyZshConfig": "false",
+			"username": "vscode",
+			"userUid": "1000",
+			"userGid": "1000",
+			"upgradePackages": "true"
+		},
+		"ghcr.io/devcontainers/features/python:1": {
+			"installTools": "true",
+			"toolsToInstall": "uv,ruff,mypy,MonkeyType,bandit"
+		},
+		"ghcr.io/devcontainers/features/git:1": {
+			"version": "os-provided",
+			"ppa": "false"
+		},
+		"ghcr.io/va-h/devcontainers-features/uv:1": {
+			"shellautocompletion": true,
+			"version": "latest"
+		}
+	},
+	"customizations": {
+		"vscode": {
+			"settings": {
+				"python.defaultInterpreterPath": "/usr/local/bin/python"
+			},
+			"extensions": [
+				"ms-python.python",
+				"ms-python.debugpy",
+				"ms-python.vscode-pylance",
+				"ms-python.isort",
+				"ms-toolsai.jupyter",
+				"ms-toolsai.jupyter-keymap",
+				"ms-toolsai.vscode-jupyter-cell-tags",
+				"ms-toolsai.jupyter-renderers",
+				"ms-toolsai.vscode-jupyter-slideshow",
+				"ms-toolsai.tensorboard",
+				"charliermarsh.ruff"
+			]
+		}
+	},
+	"remoteUser": "vscode"
+}
