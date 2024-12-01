@@ -4,6 +4,22 @@ def calculate_total_distance(left_list: list[int], right_list: list[int]) -> int
 
     return sum(abs(left - right) for left, right in zip(sorted(left_list), sorted(right_list)))
 
+def calculate_similarity_score(left_list: list[int], right_list: list[int]) -> int:
+    frequency_table: dict[int, int] = {}
+
+    for num in right_list:
+        if num in frequency_table:
+            frequency_table[num] += 1
+        else:
+            frequency_table[num] = 1
+
+    total: int = 0
+    for num in left_list:
+        if num in frequency_table:
+            total += num * frequency_table[num]
+
+    return total
+
 def read_columns(file_path: str) -> tuple[list[int], list[int]]:
     left_list: list[int] = []
     right_list: list[int] = []
@@ -19,8 +35,12 @@ def read_columns(file_path: str) -> tuple[list[int], list[int]]:
 
 def main():
     left_list, right_list = read_columns("input.txt")
+
     total_distance = calculate_total_distance(left_list, right_list)
     print(f"Total distance: {total_distance}")
+
+    similarity_score = calculate_similarity_score(left_list, right_list)
+    print(f"Similarity score: {similarity_score}")
 
 if __name__ == "__main__":
     main()
