@@ -1,4 +1,4 @@
-from solution import filter_safe_reports_without_dampening, filter_safe_reports_with_dampening
+from solution_2024_02 import filter_safe_reports_without_dampening, filter_safe_reports_with_dampening
 
 def test_example_input():
     """
