@@ -1,42 +1,103 @@
 from collections import Counter
 
 def calculate_total_distance(left_list: list[int], right_list: list[int]) -> int:
+    """
+    Calculate the total distance between two lists of integers.
+
+    The total distance is computed by:
+    - Sorting both lists.
+    - Pairing up the smallest numbers, second smallest, etc.
+    - Summing the absolute differences between each pair.
+
+    Args:
+        left_list (list[int]): The first list of integers.
+        right_list (list[int]): The second list of integers.
+
+    Returns:
+        int: The total distance between the two lists.
+
+    Raises:
+        ValueError: If the input lists are not of the same length.
+    """
     if len(left_list) != len(right_list):
         raise ValueError("Lists must be of the same length")
 
-    return sum(abs(left - right) for left, right in zip(sorted(left_list), sorted(right_list)))
+    sorted_left = sorted(left_list)
+    sorted_right = sorted(right_list)
+    total_distance = sum(abs(left - right) for left, right in zip(sorted_left, sorted_right))
+    return total_distance
 
 def calculate_similarity_score(left_list: list[int], right_list: list[int]) -> int:
+    """
+    Calculate the similarity score between two lists of integers.
+
+    The similarity score is computed by:
+    - Counting the frequency of each number in the right list.
+    - For each number in the left list, multiplying it by its frequency in the right list.
+    - Summing these products.
+
+    Args:
+        left_list (list[int]): The first list of integers.
+        right_list (list[int]): The second list of integers.
+
+    Returns:
+        int: The similarity score between the two lists.
+    """
     frequency_table = Counter(right_list)
-
-    total: int = 0
-    for num in left_list:
-        if num in frequency_table:
-            total += num * frequency_table[num]
-
-    return total
+    total_similarity_score = sum(num * frequency_table.get(num, 0) for num in left_list)
+    return total_similarity_score
 
 def read_columns(file_path: str) -> tuple[list[int], list[int]]:
+    """
+    Read two columns of integers from a file and return them as two separate lists.
+
+    Each line in the file should contain two integers separated by whitespace.
+    Empty lines are skipped.
+
+    Args:
+        file_path (str): The path to the input file.
+
+    Returns:
+        tuple[list[int], list[int]]: A tuple containing two lists of integers.
+
+    Raises:
+        ValueError: If a line does not contain two integers.
+        ValueError: If a value cannot be converted to an integer.
+    """
     left_list: list[int] = []
     right_list: list[int] = []
 
     with open(file_path, 'r') as file:
-        for line in file:
-            if line.strip():
+        for line_number, line in enumerate(file, start=1):
+            line = line.strip()
+            if line:
                 values = line.split()
-                left_list.append(int(values[0]))
-                right_list.append(int(values[1]))
+                if len(values) == 2:
+                    try:
+                        left_value = int(values[0])
+                        right_value = int(values[1])
+                        left_list.append(left_value)
+                        right_list.append(right_value)
+                    except ValueError as e:
+                        raise ValueError(f"Line {line_number}: {e}")
+                else:
+                    raise ValueError(f"Line {line_number}: Expected at two values, got {len(values)}")
 
     return left_list, right_list
 
 def main():
-    left_list, right_list = read_columns("input.txt")
+    """
+    Main function to read input data, calculate total distance and similarity score, and print the results.
+    """
+    try:
+        left_list, right_list = read_columns("input.txt")
+        total_distance = calculate_total_distance(left_list, right_list)
+        print(f"Total distance: {total_distance}")
 
-    total_distance = calculate_total_distance(left_list, right_list)
-    print(f"Total distance: {total_distance}")
-
-    similarity_score = calculate_similarity_score(left_list, right_list)
-    print(f"Similarity score: {similarity_score}")
+        similarity_score = calculate_similarity_score(left_list, right_list)
+        print(f"Similarity score: {similarity_score}")
+    except Exception as e:
+        print(f"Error: {e}")
 
 if __name__ == "__main__":
     main()
