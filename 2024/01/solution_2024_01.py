@@ -29,6 +29,7 @@ def calculate_total_distance(left_list: list[int], right_list: list[int]) -> int
 
     return sum(abs(left - right) for left, right in zip(sorted_left, sorted_right))
 
+
 def calculate_similarity_score(left_list: list[int], right_list: list[int]) -> int:
     """Calculate the similarity score between two lists of integers.
 
@@ -47,6 +48,7 @@ def calculate_similarity_score(left_list: list[int], right_list: list[int]) -> i
     """
     frequency_table = Counter(right_list)
     return sum(num * frequency_table.get(num, 0) for num in left_list)
+
 
 def read_columns(file_path: str) -> tuple[list[int], list[int]]:
     """Read two columns of integers from a file and return them as two separate lists.
@@ -82,9 +84,12 @@ def read_columns(file_path: str) -> tuple[list[int], list[int]]:
                     except ValueError as e:
                         raise ValueError(f"Line {line_number}: {e}")
                 else:
-                    raise ValueError(f"Line {line_number}: Expected at two values, got {len(values)}")
+                    raise ValueError(
+                        f"Line {line_number}: Expected at two values, got {len(values)}"
+                    )
 
     return left_list, right_list
+
 
 def main() -> None:
     """Main function to read input data, calculate total distance and similarity score, and print the results."""
@@ -97,6 +102,7 @@ def main() -> None:
         print(f"Similarity score: {similarity_score}")
     except Exception as e:
         print(f"Error: {e}")
+
 
 if __name__ == "__main__":
     main()

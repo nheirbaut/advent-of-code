@@ -2,6 +2,7 @@ from pathlib import Path
 
 MAX_VALUE_DISTANCE = 3
 
+
 def is_safe_report_without_dampening(report: list[int]) -> bool:
     """Determine if a report is safe without applying the Problem Dampener.
 
@@ -37,6 +38,7 @@ def is_safe_report_without_dampening(report: list[int]) -> bool:
 
     return True
 
+
 def is_safe_report_with_dampening(report: list[int]) -> bool:
     """Determine if a report is safe, possibly after removing one level.
 
@@ -53,13 +55,16 @@ def is_safe_report_with_dampening(report: list[int]) -> bool:
 
     return False
 
+
 def filter_safe_reports_without_dampening(reports: list[list[int]]) -> list[list[int]]:
     """Filter and return the list of safe reports without applying the Problem Dampener."""
     return [report for report in reports if is_safe_report_without_dampening(report)]
 
+
 def filter_safe_reports_with_dampening(reports: list[list[int]]) -> list[list[int]]:
     """Filter and return the list of safe reports, applying the Problem Dampener."""
     return [report for report in reports if is_safe_report_with_dampening(report)]
+
 
 def read_reports(file_path: str) -> list[list[int]]:
     """Read reports from a file and return them as a list of lists of integers."""
@@ -73,6 +78,7 @@ def read_reports(file_path: str) -> list[list[int]]:
 
     return reports
 
+
 def main() -> None:
     """Main entry point for the application."""
     reports = read_reports("input.txt")
@@ -82,6 +88,7 @@ def main() -> None:
 
     safe_reports_after_dampening = filter_safe_reports_with_dampening(reports)
     print(f"Number of safe reports with dampening: {len(safe_reports_after_dampening)}")
+
 
 if __name__ == "__main__":
     main()

@@ -20,7 +20,8 @@ def find_all_instructions(memory: str) -> list[str]:
     pattern = r"mul\(\d{1,3},\d{1,3}\)|do\(\)|don't\(\)"
     return re.findall(pattern, memory)
 
-def get_mul_arguments(instruction: str) ->tuple[int, int]:
+
+def get_mul_arguments(instruction: str) -> tuple[int, int]:
     """Parse a mul instruction and extract its numerical arguments.
 
     Args:
@@ -39,6 +40,7 @@ def get_mul_arguments(instruction: str) ->tuple[int, int]:
     n2 = int(n2_str)
     return n1, n2
 
+
 def sum_mul_instructions(instructions: list[str]) -> int:
     """Calculate the sum of the results of all valid mul instructions.
 
@@ -52,11 +54,12 @@ def sum_mul_instructions(instructions: list[str]) -> int:
     total = 0
 
     for instruction in instructions:
-        if instruction.startswith('mul('):
+        if instruction.startswith("mul("):
             n1, n2 = get_mul_arguments(instruction)
             total += n1 * n2
 
     return total
+
 
 def sum_enabled_mul_instructions(instructions: list[str]) -> int:
     """Calculate the sum of the results of enabled mul instructions, considering do() and don't() instructions.
@@ -72,15 +75,16 @@ def sum_enabled_mul_instructions(instructions: list[str]) -> int:
     enabled = True
 
     for instruction in instructions:
-        if instruction == 'do()':
+        if instruction == "do()":
             enabled = True
         elif instruction == "don't()":
             enabled = False
-        elif instruction.startswith('mul(') and enabled:
+        elif instruction.startswith("mul(") and enabled:
             n1, n2 = get_mul_arguments(instruction)
             total += n1 * n2
 
     return total
+
 
 def get_input(file_path: str) -> str:
     """Read the content of the input file.
@@ -95,6 +99,7 @@ def get_input(file_path: str) -> str:
     with Path(file_path).open() as file:
         return file.read()
 
+
 def main() -> None:
     memory = get_input("input.txt")
 
@@ -106,5 +111,6 @@ def main() -> None:
     part2_solution = sum_enabled_mul_instructions(instructions)
     print(f"Solution Part 2: {part2_solution}")
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()

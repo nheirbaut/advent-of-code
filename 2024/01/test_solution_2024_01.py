@@ -4,6 +4,7 @@ from solution_2024_01 import calculate_similarity_score, calculate_total_distanc
 
 # Tests for calculate_similarity_score
 
+
 def test_calculate_similarity_score_sample_input():
     """
     Test the sample input provided in the puzzle description for calculate_similarity_score.
@@ -11,6 +12,7 @@ def test_calculate_similarity_score_sample_input():
     left_list = [3, 4, 2, 1, 3, 3]
     right_list = [4, 3, 5, 3, 9, 3]
     assert calculate_similarity_score(left_list, right_list) == 31
+
 
 def test_calculate_similarity_score_empty_lists():
     """
@@ -20,6 +22,7 @@ def test_calculate_similarity_score_empty_lists():
     right_list = []
     assert calculate_similarity_score(left_list, right_list) == 0
 
+
 def test_calculate_similarity_score_no_common_elements():
     """
     Test calculate_similarity_score with lists that have no common elements.
@@ -27,6 +30,7 @@ def test_calculate_similarity_score_no_common_elements():
     left_list = [1, 2, 3]
     right_list = [4, 5, 6]
     assert calculate_similarity_score(left_list, right_list) == 0
+
 
 def test_calculate_similarity_score_negative_numbers():
     """
@@ -38,6 +42,7 @@ def test_calculate_similarity_score_negative_numbers():
     # -1 appears 2 times in right_list: -1 * 2 = -2 (for each occurrence in left_list)
     # Total similarity score = (-1 * 2) + (-2 * 0) + (-3 * 0) + (-1 * 2) = -2 + 0 + 0 + -2 = -4
     assert calculate_similarity_score(left_list, right_list) == -4
+
 
 def test_calculate_similarity_score_zeros():
     """
@@ -51,6 +56,7 @@ def test_calculate_similarity_score_zeros():
     # Total similarity score = 0 + 0 + 0 = 0
     assert calculate_similarity_score(left_list, right_list) == 0
 
+
 def test_calculate_similarity_score_duplicate_numbers():
     """
     Test calculate_similarity_score with duplicate numbers in the left list.
@@ -61,6 +67,7 @@ def test_calculate_similarity_score_duplicate_numbers():
     # 2 appears 2 times in right_list: 2 * 2 = 4 (for each occurrence in left_list)
     # Total similarity score = 4 + 4 + 4 = 12
     assert calculate_similarity_score(left_list, right_list) == 12
+
 
 def test_calculate_similarity_score_large_numbers():
     """
@@ -75,6 +82,7 @@ def test_calculate_similarity_score_large_numbers():
     # Total similarity score = 2000000 + 2000000 + 3000000 = 7000000
     assert calculate_similarity_score(left_list, right_list) == 7000000
 
+
 def test_calculate_similarity_score_single_element_lists():
     """
     Test calculate_similarity_score with single-element lists.
@@ -83,6 +91,7 @@ def test_calculate_similarity_score_single_element_lists():
     right_list = [5]
     # 5 appears 1 time: 5 * 1 = 5
     assert calculate_similarity_score(left_list, right_list) == 5
+
 
 def test_calculate_similarity_score_left_list_repeats_right_list_once():
     """
@@ -94,6 +103,7 @@ def test_calculate_similarity_score_left_list_repeats_right_list_once():
     # Total similarity score = 1 + 1 + 1 + 1 = 4
     assert calculate_similarity_score(left_list, right_list) == 4
 
+
 def test_calculate_similarity_score_right_list_empty():
     """
     Test calculate_similarity_score when the right list is empty; similarity score should be zero.
@@ -101,6 +111,7 @@ def test_calculate_similarity_score_right_list_empty():
     left_list = [1, 2, 3]
     right_list = []
     assert calculate_similarity_score(left_list, right_list) == 0
+
 
 def test_calculate_similarity_score_right_list_has_more_occurrences():
     """
@@ -112,6 +123,7 @@ def test_calculate_similarity_score_right_list_has_more_occurrences():
     # 3 appears 2 times: 3 * 2 = 6
     # Total similarity score = 6 + 6 = 12
     assert calculate_similarity_score(left_list, right_list) == 12
+
 
 def test_calculate_similarity_score_different_length_lists():
     """
@@ -128,7 +140,9 @@ def test_calculate_similarity_score_different_length_lists():
     # Total similarity score = 0 + 4 + 3 + 0 + 0 = 7
     assert calculate_similarity_score(left_list, right_list) == 7
 
+
 # Tests for calculate_total_distance
+
 
 def test_calculate_total_distance_sample_input():
     """
@@ -138,6 +152,7 @@ def test_calculate_total_distance_sample_input():
     right_list = [4, 3, 5, 3, 9, 3]
     assert calculate_total_distance(left_list, right_list) == 11
 
+
 def test_calculate_total_distance_empty_lists():
     """
     Test that calculate_total_distance returns 0 when both lists are empty.
@@ -145,6 +160,7 @@ def test_calculate_total_distance_empty_lists():
     left_list = []
     right_list = []
     assert calculate_total_distance(left_list, right_list) == 0
+
 
 def test_calculate_total_distance_single_element_lists():
     """
@@ -154,6 +170,7 @@ def test_calculate_total_distance_single_element_lists():
     right_list = [10]
     assert calculate_total_distance(left_list, right_list) == 5
 
+
 def test_calculate_total_distance_negative_numbers():
     """
     Test calculate_total_distance with negative numbers in the lists.
@@ -161,6 +178,7 @@ def test_calculate_total_distance_negative_numbers():
     left_list = [-1, -2, -3]
     right_list = [1, 2, 3]
     assert calculate_total_distance(left_list, right_list) == 12
+
 
 def test_calculate_total_distance_zeros():
     """
@@ -170,6 +188,7 @@ def test_calculate_total_distance_zeros():
     right_list = [0, 0, 0]
     assert calculate_total_distance(left_list, right_list) == 0
 
+
 def test_calculate_total_distance_duplicate_numbers():
     """
     Test calculate_total_distance with duplicate numbers in the lists.
@@ -178,6 +197,7 @@ def test_calculate_total_distance_duplicate_numbers():
     right_list = [2, 2, 2, 2]
     assert calculate_total_distance(left_list, right_list) == 4
 
+
 def test_calculate_total_distance_large_numbers():
     """
     Test calculate_total_distance with large numbers to ensure it handles big integers.
@@ -185,6 +205,7 @@ def test_calculate_total_distance_large_numbers():
     left_list = [1000000, 2000000, 3000000]
     right_list = [3000000, 2000000, 1000000]
     assert calculate_total_distance(left_list, right_list) == 0
+
 
 def test_calculate_total_distance_different_length_lists():
     """
