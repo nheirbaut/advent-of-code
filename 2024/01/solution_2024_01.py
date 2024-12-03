@@ -27,7 +27,7 @@ def calculate_total_distance(left_list: list[int], right_list: list[int]) -> int
     sorted_left = sorted(left_list)
     sorted_right = sorted(right_list)
 
-    return sum(abs(left - right) for left, right in zip(sorted_left, sorted_right))
+    return sum(abs(left - right) for left, right in zip(sorted_left, sorted_right, strict=False))
 
 
 def calculate_similarity_score(left_list: list[int], right_list: list[int]) -> int:

@@ -5,8 +5,7 @@ from solution_2024_02 import (
 
 
 def test_example_input():
-    """
-    Test the sample input provided in the puzzle description.
+    """Test the sample input provided in the puzzle description.
     """
     reports = [
         [7, 6, 4, 2, 1],
@@ -20,56 +19,49 @@ def test_example_input():
 
 
 def test_empty_reports():
-    """
-    Test that the function returns 0 when there are no reports.
+    """Test that the function returns 0 when there are no reports.
     """
     reports = []
     assert len(filter_safe_reports_without_dampening(reports)) == 0
 
 
 def test_single_report_safe_increasing():
-    """
-    Test a single report that is safe and increasing.
+    """Test a single report that is safe and increasing.
     """
     reports = [[1, 2, 3, 4, 5]]
     assert len(filter_safe_reports_without_dampening(reports)) == 1
 
 
 def test_single_report_safe_decreasing():
-    """
-    Test a single report that is safe and decreasing.
+    """Test a single report that is safe and decreasing.
     """
     reports = [[5, 4, 3, 2, 1]]
     assert len(filter_safe_reports_without_dampening(reports)) == 1
 
 
 def test_single_report_unsafe_mixed_direction():
-    """
-    Test a single report that is unsafe due to changing direction.
+    """Test a single report that is unsafe due to changing direction.
     """
     reports = [[1, 2, 1, 2, 1]]
     assert len(filter_safe_reports_without_dampening(reports)) == 0
 
 
 def test_single_report_unsafe_large_difference():
-    """
-    Test a single report that is unsafe due to a large difference.
+    """Test a single report that is unsafe due to a large difference.
     """
     reports = [[1, 2, 10, 11, 12]]
     assert len(filter_safe_reports_without_dampening(reports)) == 0
 
 
 def test_report_with_equal_adjacent_levels():
-    """
-    Test a report that is unsafe because it contains equal adjacent levels.
+    """Test a report that is unsafe because it contains equal adjacent levels.
     """
     reports = [[1, 2, 2, 3, 4]]
     assert len(filter_safe_reports_without_dampening(reports)) == 0
 
 
 def test_report_with_difference_of_one():
-    """
-    Test reports where adjacent levels differ by exactly one.
+    """Test reports where adjacent levels differ by exactly one.
     """
     reports = [
         [1, 2, 3, 4, 5],  # Increasing
@@ -79,8 +71,7 @@ def test_report_with_difference_of_one():
 
 
 def test_report_with_difference_of_three():
-    """
-    Test reports where adjacent levels differ by exactly three.
+    """Test reports where adjacent levels differ by exactly three.
     """
     reports = [
         [1, 4, 7, 10, 13],  # Increasing
@@ -90,8 +81,7 @@ def test_report_with_difference_of_three():
 
 
 def test_report_difference_out_of_bounds():
-    """
-    Test reports where adjacent levels differ by more than three or less than one.
+    """Test reports where adjacent levels differ by more than three or less than one.
     """
     reports = [
         [1, 5, 9, 13, 17],  # Difference of 4 (unsafe)
@@ -103,8 +93,7 @@ def test_report_difference_out_of_bounds():
 
 
 def test_report_mixed_increasing_decreasing():
-    """
-    Test reports that change direction (unsafe).
+    """Test reports that change direction (unsafe).
     """
     reports = [
         [1, 2, 3, 2, 1],  # Increases then decreases
@@ -115,8 +104,7 @@ def test_report_mixed_increasing_decreasing():
 
 
 def test_report_with_single_level():
-    """
-    Test reports that contain only one level.
+    """Test reports that contain only one level.
     """
     reports = [
         [5],  # Single level (safe by default)
@@ -126,8 +114,7 @@ def test_report_with_single_level():
 
 
 def test_report_with_two_levels_safe():
-    """
-    Test reports with two levels that are safe.
+    """Test reports with two levels that are safe.
     """
     reports = [
         [1, 3],  # Increasing by 2 (safe)
@@ -137,8 +124,7 @@ def test_report_with_two_levels_safe():
 
 
 def test_report_with_two_levels_unsafe():
-    """
-    Test reports with two levels that are unsafe.
+    """Test reports with two levels that are unsafe.
     """
     reports = [
         [1, 5],  # Increasing by 4 (unsafe)
@@ -148,8 +134,7 @@ def test_report_with_two_levels_unsafe():
 
 
 def test_negative_levels_safe():
-    """
-    Test reports with negative levels that are safe.
+    """Test reports with negative levels that are safe.
     """
     reports = [
         [-5, -4, -3, -2, -1],  # Increasing
@@ -159,8 +144,7 @@ def test_negative_levels_safe():
 
 
 def test_negative_levels_unsafe():
-    """
-    Test reports with negative levels that are unsafe.
+    """Test reports with negative levels that are unsafe.
     """
     reports = [
         [-1, -2, -1, -2, -1],  # Changing direction
@@ -170,8 +154,7 @@ def test_negative_levels_unsafe():
 
 
 def test_reports_with_zeros():
-    """
-    Test reports that include zeros.
+    """Test reports that include zeros.
     """
     reports = [
         [0, 1, 2, 3, 4],  # Increasing (safe)
@@ -183,8 +166,7 @@ def test_reports_with_zeros():
 
 
 def test_large_reports():
-    """
-    Test reports with a large number of levels.
+    """Test reports with a large number of levels.
     """
     reports = [
         list(range(1, 101)),  # Increasing by 1 (safe)
@@ -196,8 +178,7 @@ def test_large_reports():
 
 
 def test_reports_with_floats():
-    """
-    Optional: Test reports that include floating-point levels.
+    """Optional: Test reports that include floating-point levels.
     """
     reports = [
         [1.0, 2.5, 4.0, 5.5],  # Increases by 1.5 (safe)
@@ -209,8 +190,7 @@ def test_reports_with_floats():
 
 
 def test_example_input_with_dampening():
-    """
-    Test the sample input provided in the puzzle description for Part Two.
+    """Test the sample input provided in the puzzle description for Part Two.
     """
     reports = [
         [7, 6, 4, 2, 1],  # Safe without removing any level.
@@ -224,8 +204,7 @@ def test_example_input_with_dampening():
 
 
 def test_reports_become_safe_after_removal():
-    """
-    Test reports that become safe by removing one level.
+    """Test reports that become safe by removing one level.
     """
     reports = [
         [1, 3, 2, 4, 5],  # Remove '3' to fix direction change.
@@ -236,8 +215,7 @@ def test_reports_become_safe_after_removal():
 
 
 def test_reports_still_unsafe_after_removal():
-    """
-    Test reports that remain unsafe even after removing any one level.
+    """Test reports that remain unsafe even after removing any one level.
     """
     reports = [
         [1, 2, 7, 8, 9],  # Differences too large.
@@ -248,8 +226,7 @@ def test_reports_still_unsafe_after_removal():
 
 
 def test_reports_already_safe():
-    """
-    Test reports that are already safe and should remain so.
+    """Test reports that are already safe and should remain so.
     """
     reports = [
         [1, 2, 3, 4, 5],  # Increasing.
@@ -261,8 +238,7 @@ def test_reports_already_safe():
 
 
 def test_reports_with_equal_adjacent_levels():
-    """
-    Test reports that can become safe by removing a level with equal adjacent levels.
+    """Test reports that can become safe by removing a level with equal adjacent levels.
     """
     reports = [
         [1, 2, 2, 3, 4],  # Remove one '2' to fix equal levels.
@@ -273,8 +249,7 @@ def test_reports_with_equal_adjacent_levels():
 
 
 def test_reports_with_large_differences():
-    """
-    Test reports that can become safe by removing a level causing a large difference.
+    """Test reports that can become safe by removing a level causing a large difference.
     """
     reports = [
         [1, 5, 9, 13, 17]  # Cannot be made safe (differences too large).
@@ -283,8 +258,7 @@ def test_reports_with_large_differences():
 
 
 def test_single_level_reports():
-    """
-    Test reports that contain only one level.
+    """Test reports that contain only one level.
     """
     reports = [
         [5],
@@ -294,8 +268,7 @@ def test_single_level_reports():
 
 
 def test_two_level_reports():
-    """
-    Test reports with two levels.
+    """Test reports with two levels.
     """
     reports = [
         [1, 2],  # Difference of 1 (safe).
@@ -306,8 +279,7 @@ def test_two_level_reports():
 
 
 def test_reports_with_negative_levels():
-    """
-    Test reports with negative levels that can become safe.
+    """Test reports with negative levels that can become safe.
     """
     reports = [
         [-1, -2, -3, -4, -5],  # Decreasing (safe).
@@ -317,8 +289,7 @@ def test_reports_with_negative_levels():
 
 
 def test_reports_with_zeros_using_dampening():
-    """
-    Test reports that include zeros and can become safe after removing a level.
+    """Test reports that include zeros and can become safe after removing a level.
     """
     reports = [
         [0, 0, 1, 2],  # Remove one '0' to fix equal levels.
@@ -328,8 +299,7 @@ def test_reports_with_zeros_using_dampening():
 
 
 def test_large_reports_with_dampening():
-    """
-    Test reports with a large number of levels.
+    """Test reports with a large number of levels.
     """
     reports = [
         list(range(1, 101)),  # Increasing by 1 (safe).
@@ -344,8 +314,7 @@ def test_large_reports_with_dampening():
 
 
 def test_reports_that_cannot_be_fixed():
-    """
-    Test reports that cannot be made safe even after removing any one level.
+    """Test reports that cannot be made safe even after removing any one level.
     """
     reports = [
         [1, 2, 7, 8, 9],  # Differences too large.
