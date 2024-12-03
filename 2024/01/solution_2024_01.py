@@ -28,7 +28,10 @@ def calculate_total_distance(left_list: list[int], right_list: list[int]) -> int
     sorted_left = sorted(left_list)
     sorted_right = sorted(right_list)
 
-    return sum(abs(left - right) for left, right in zip(sorted_left, sorted_right, strict=False))
+    return sum(
+        abs(left - right)
+        for left, right in zip(sorted_left, sorted_right, strict=False)
+    )
 
 
 def calculate_similarity_score(left_list: list[int], right_list: list[int]) -> int:
@@ -86,10 +89,10 @@ def read_columns(file_path: str) -> tuple[list[int], list[int]]:
                         msg = f"Line {line_number}: {e}"
                         raise ValueError(msg)
                 else:
-                    msg = f"Line {line_number}: Expected at two values, got {len(values)}"
-                    raise ValueError(
-                        msg
+                    msg = (
+                        f"Line {line_number}: Expected at two values, got {len(values)}"
                     )
+                    raise ValueError(msg)
 
     return left_list, right_list
 

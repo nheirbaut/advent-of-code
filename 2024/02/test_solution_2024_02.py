@@ -96,7 +96,7 @@ def test_report_with_single_level() -> None:
     """Test reports that contain only one level."""
     reports = [
         [5],  # Single level (safe by default)
-        [10]   # Single level (safe by default)
+        [10],  # Single level (safe by default)
     ]
     assert len(filter_safe_reports_without_dampening(reports)) == 2
 
@@ -105,7 +105,7 @@ def test_report_with_two_levels_safe() -> None:
     """Test reports with two levels that are safe."""
     reports = [
         [1, 3],  # Increasing by 2 (safe)
-        [5, 2]   # Decreasing by 3 (safe)
+        [5, 2],  # Decreasing by 3 (safe)
     ]
     assert len(filter_safe_reports_without_dampening(reports)) == 2
 
@@ -114,7 +114,7 @@ def test_report_with_two_levels_unsafe() -> None:
     """Test reports with two levels that are unsafe."""
     reports = [
         [1, 5],  # Increasing by 4 (unsafe)
-        [5, 5]   # Difference of 0 (unsafe)
+        [5, 5],  # Difference of 0 (unsafe)
     ]
     assert len(filter_safe_reports_without_dampening(reports)) == 0
 
@@ -123,7 +123,7 @@ def test_negative_levels_safe() -> None:
     """Test reports with negative levels that are safe."""
     reports = [
         [-5, -4, -3, -2, -1],  # Increasing
-        [0, -1, -2, -3, -4]    # Decreasing
+        [0, -1, -2, -3, -4],  # Decreasing
     ]
     assert len(filter_safe_reports_without_dampening(reports)) == 2
 
@@ -276,7 +276,11 @@ def test_large_reports_with_dampening() -> None:
         list(range(100, 0, -2)),  # Decreasing by 2 (safe).
         list(range(0, 400, 4)),  # Differences of 4 (unsafe, cannot be fixed).
         [i**2 for i in range(1, 10)],  # Varying differences (unsafe, cannot be fixed).
-        [*list(range(1, 50)), 25, *list(range(51, 100))],  # Remove '25' to fix direction change.
+        [
+            *list(range(1, 50)),
+            25,
+            *list(range(51, 100)),
+        ],  # Remove '25' to fix direction change.
     ]
     assert len(filter_safe_reports_with_dampening(reports)) == 3
 

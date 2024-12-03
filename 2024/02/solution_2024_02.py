@@ -49,7 +49,7 @@ def is_safe_report_with_dampening(report: list[int]) -> bool:
 
     # Try removing each level one at a time
     for i in range(len(report)):
-        modified_report = report[:i] + report[i + 1:]
+        modified_report = report[:i] + report[i + 1 :]
         if is_safe_report_without_dampening(modified_report):
             return True
 
