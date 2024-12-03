@@ -1,8 +1,9 @@
 from collections import Counter
+from pathlib import Path
+
 
 def calculate_total_distance(left_list: list[int], right_list: list[int]) -> int:
-    """
-    Calculate the total distance between two lists of integers.
+    """Calculate the total distance between two lists of integers.
 
     The total distance is computed by:
     - Sorting both lists.
@@ -18,18 +19,18 @@ def calculate_total_distance(left_list: list[int], right_list: list[int]) -> int
 
     Raises:
         ValueError: If the input lists are not of the same length.
+
     """
     if len(left_list) != len(right_list):
         raise ValueError("Lists must be of the same length")
 
     sorted_left = sorted(left_list)
     sorted_right = sorted(right_list)
-    total_distance = sum(abs(left - right) for left, right in zip(sorted_left, sorted_right))
-    return total_distance
+
+    return sum(abs(left - right) for left, right in zip(sorted_left, sorted_right))
 
 def calculate_similarity_score(left_list: list[int], right_list: list[int]) -> int:
-    """
-    Calculate the similarity score between two lists of integers.
+    """Calculate the similarity score between two lists of integers.
 
     The similarity score is computed by:
     - Counting the frequency of each number in the right list.
@@ -42,14 +43,13 @@ def calculate_similarity_score(left_list: list[int], right_list: list[int]) -> i
 
     Returns:
         int: The similarity score between the two lists.
+
     """
     frequency_table = Counter(right_list)
-    total_similarity_score = sum(num * frequency_table.get(num, 0) for num in left_list)
-    return total_similarity_score
+    return sum(num * frequency_table.get(num, 0) for num in left_list)
 
 def read_columns(file_path: str) -> tuple[list[int], list[int]]:
-    """
-    Read two columns of integers from a file and return them as two separate lists.
+    """Read two columns of integers from a file and return them as two separate lists.
 
     Each line in the file should contain two integers separated by whitespace.
     Empty lines are skipped.
@@ -63,11 +63,12 @@ def read_columns(file_path: str) -> tuple[list[int], list[int]]:
     Raises:
         ValueError: If a line does not contain two integers.
         ValueError: If a value cannot be converted to an integer.
+
     """
     left_list: list[int] = []
     right_list: list[int] = []
 
-    with open(file_path, 'r') as file:
+    with Path(file_path).open() as file:
         for line_number, line in enumerate(file, start=1):
             line = line.strip()
             if line:
@@ -85,10 +86,8 @@ def read_columns(file_path: str) -> tuple[list[int], list[int]]:
 
     return left_list, right_list
 
-def main():
-    """
-    Main function to read input data, calculate total distance and similarity score, and print the results.
-    """
+def main() -> None:
+    """Main function to read input data, calculate total distance and similarity score, and print the results."""
     try:
         left_list, right_list = read_columns("input.txt")
         total_distance = calculate_total_distance(left_list, right_list)

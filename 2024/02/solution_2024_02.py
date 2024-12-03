@@ -1,8 +1,9 @@
+from pathlib import Path
+
 MAX_VALUE_DISTANCE = 3
 
 def is_safe_report_without_dampening(report: list[int]) -> bool:
-    """
-    Determines if a report is safe without applying the Problem Dampener.
+    """Determine if a report is safe without applying the Problem Dampener.
 
     A report is safe if:
     - The levels are either all increasing or all decreasing.
@@ -26,9 +27,8 @@ def is_safe_report_without_dampening(report: list[int]) -> bool:
         if levels_should_increase:
             if current_level > level:
                 return False
-        else:
-            if current_level < level:
-                return False
+        elif current_level < level:
+            return False
 
         if abs(current_level - level) > MAX_VALUE_DISTANCE:
             return False
@@ -38,8 +38,7 @@ def is_safe_report_without_dampening(report: list[int]) -> bool:
     return True
 
 def is_safe_report_with_dampening(report: list[int]) -> bool:
-    """
-    Determines if a report is safe, possibly after removing one level.
+    """Determine if a report is safe, possibly after removing one level.
 
     The Problem Dampener allows removing one level to make the report safe.
     """
@@ -55,24 +54,18 @@ def is_safe_report_with_dampening(report: list[int]) -> bool:
     return False
 
 def filter_safe_reports_without_dampening(reports: list[list[int]]) -> list[list[int]]:
-    """
-    Filters and returns the list of safe reports without applying the Problem Dampener.
-    """
+    """Filter and return the list of safe reports without applying the Problem Dampener."""
     return [report for report in reports if is_safe_report_without_dampening(report)]
 
 def filter_safe_reports_with_dampening(reports: list[list[int]]) -> list[list[int]]:
-    """
-    Filters and returns the list of safe reports, applying the Problem Dampener.
-    """
+    """Filter and return the list of safe reports, applying the Problem Dampener."""
     return [report for report in reports if is_safe_report_with_dampening(report)]
 
 def read_reports(file_path: str) -> list[list[int]]:
-    """
-    Reads reports from a file and returns them as a list of lists of integers.
-    """
+    """Read reports from a file and return them as a list of lists of integers."""
     reports = []
 
-    with open(file_path, 'r') as file:
+    with Path(file_path).open(file_path) as file:
         for line in file:
             line = line.strip()
             if line:
@@ -80,7 +73,8 @@ def read_reports(file_path: str) -> list[list[int]]:
 
     return reports
 
-def main():
+def main() -> None:
+    """Main entry point for the application."""
     reports = read_reports("input.txt")
 
     safe_reports = filter_safe_reports_without_dampening(reports)

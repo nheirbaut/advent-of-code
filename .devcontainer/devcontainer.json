@@ -11,25 +11,16 @@
 		"vscode": {
 			"extensions": [
 				"charliermarsh.ruff",
-				"codezombiech.gitignore",
-				"DavidAnson.vscode-markdownlint",
-				"eamodio.gitlens",
-				"exiasr.hadolint",
-				"kevinrose.vsc-python-indent",
-				"mosapride.zenkaku",
-				"ms-azuretools.vscode-docker",
-				"ms-python.debugpy",
-				"ms-python.isort",
 				"ms-python.python",
 				"ms-python.vscode-pylance",
-				"njpwerner.autodocstring",
-				"oderwat.indent-rainbow",
-				"pkief.material-icon-theme",
+				"codezombiech.gitignore",
+				"eamodio.gitlens",
 				"redhat.vscode-yaml",
 				"shardulm94.trailing-spaces",
 				"tamasfe.even-better-toml",
 				"usernamehw.errorlens",
-				"yzhang.markdown-all-in-one"
+				"yzhang.markdown-all-in-one",
+				"njpwerner.autodocstring"
 			]
 		}
 	},
