@@ -14,7 +14,7 @@ def find_all_instructions(memory: str) -> list[str]:
         memory (str): The corrupted memory string.
 
     Returns:
-        List[str]: A list of valid instruction strings.
+        list[str]: A list of valid instruction strings.
     """
     pattern = r"mul\(\d{1,3},\d{1,3}\)|do\(\)|don't\(\)"
     return re.findall(pattern, memory)
@@ -27,7 +27,7 @@ def get_mul_arguments(instruction: str) -> tuple[int, int]:
         instruction (str): A valid mul instruction in the form 'mul(n1,n2)'.
 
     Returns:
-        Tuple[int, int]: A tuple containing the two integer arguments.
+        tuple[int, int]: A tuple containing the two integer arguments.
 
     Raises:
         ValueError: If the instruction is not a valid mul instruction.
