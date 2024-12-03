@@ -12,9 +12,9 @@ def is_safe_report_without_dampening(report: list[int]) -> bool:
     if len(report) <= 1:
         return True
 
-    current_level: int = report[0]
+    current_level = report[0]
 
-    levels_should_increase: bool = True
+    levels_should_increase = True
 
     if current_level > report[1]:
         levels_should_increase = False

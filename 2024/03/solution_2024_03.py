@@ -1,59 +1,110 @@
 import re
 
 def find_all_instructions(memory: str) -> list[str]:
-    return re.findall(r"mul\(\d{1,3},\d{1,3}\)|do\(\)|don't\(\)", memory)
+    """
+    Extracts all valid instructions from the memory string.
 
-def get_mul_arguments(instruction: str) -> tuple[int, int]:
-    f1, f2 = map(int, instruction[4:-1].split(","))
-    return f1, f2
+    Valid instructions are:
+    - mul(n1,n2): where n1 and n2 are 1 to 3 digit integers.
+    - do()
+    - don't()
+
+    Args:
+        memory (str): The corrupted memory string.
+
+    Returns:
+        List[str]: A list of valid instruction strings.
+    """
+    pattern = r"mul\(\d{1,3},\d{1,3}\)|do\(\)|don't\(\)"
+    return re.findall(pattern, memory)
+
+def get_mul_arguments(instruction: str) ->tuple[int, int]:
+    """
+    Parses a mul instruction and extracts its numerical arguments.
+
+    Args:
+        instruction (str): A valid mul instruction in the form 'mul(n1,n2)'.
+
+    Returns:
+        Tuple[int, int]: A tuple containing the two integer arguments.
+
+    Raises:
+        ValueError: If the instruction is not a valid mul instruction.
+    """
+    args = instruction[4:-1]
+    n1_str, n2_str = args.split(",")
+    n1 = int(n1_str)
+    n2 = int(n2_str)
+    return n1, n2
 
 def sum_mul_instructions(instructions: list[str]) -> int:
-    sum_total = 0
+    """
+    Calculates the sum of the results of all valid mul instructions.
+
+    Args:
+        instructions (List[str]): A list of instruction strings.
+
+    Returns:
+        int: The sum of the multiplication results.
+    """
+    total = 0
 
     for instruction in instructions:
-        if instruction[0] == 'd':
-            continue
+        if instruction.startswith('mul('):
+            n1, n2 = get_mul_arguments(instruction)
+            total += n1 * n2
 
-        f1, f2 = get_mul_arguments(instruction)
-
-        sum_total += f1 * f2
-
-    return sum_total
+    return total
 
 def sum_enabled_mul_instructions(instructions: list[str]) -> int:
-    sum_total = 0
+    """
+    Calculates the sum of the results of enabled mul instructions,
+    considering do() and don't() instructions.
 
+    Args:
+        instructions (List[str]): A list of instruction strings.
+
+    Returns:
+        int: The sum of the multiplication results of enabled mul instructions.
+    """
+    total = 0
     enabled = True
 
     for instruction in instructions:
-        if instruction == "do()":
+        if instruction == 'do()':
             enabled = True
-            continue
-
-        if instruction == "don't()":
+        elif instruction == "don't()":
             enabled = False
-            continue
+        elif instruction.startswith('mul('):
+            if enabled:
+                n1, n2 = get_mul_arguments(instruction)
+                total += n1 * n2
 
-        if enabled:
-            f1, f2 = get_mul_arguments(instruction)
-            sum_total += f1 * f2
-
-    return sum_total
+    return total
 
 def get_input(file_path: str) -> str:
+    """
+    Reads the content of the input file.
+
+    Args:
+        file_path (str): The path to the input file.
+
+    Returns:
+        str: The content of the file as a string.
+    """
     with open(file_path, 'r') as file:
         return file.read()
 
 def main() -> None:
-    memory = get_input("/workspaces/advent-of-code/2024/03/input.txt")
+    memory = get_input("input.txt")
 
     instructions = find_all_instructions(memory)
 
     part1_solution = sum_mul_instructions(instructions)
-    print(f"Solution part 1: {part1_solution}")
+    print(f"Solution Part 1: {part1_solution}")
 
     part2_solution = sum_enabled_mul_instructions(instructions)
-    print(f"Solution part 2: {part2_solution}")
+    print(f"Solution Part 2: {part2_solution}")
 
 if __name__ == '__main__':
     main()
