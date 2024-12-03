@@ -22,7 +22,8 @@ def calculate_total_distance(left_list: list[int], right_list: list[int]) -> int
 
     """
     if len(left_list) != len(right_list):
-        raise ValueError("Lists must be of the same length")
+        msg = "Lists must be of the same length"
+        raise ValueError(msg)
 
     sorted_left = sorted(left_list)
     sorted_right = sorted(right_list)
@@ -82,10 +83,12 @@ def read_columns(file_path: str) -> tuple[list[int], list[int]]:
                         left_list.append(left_value)
                         right_list.append(right_value)
                     except ValueError as e:
-                        raise ValueError(f"Line {line_number}: {e}")
+                        msg = f"Line {line_number}: {e}"
+                        raise ValueError(msg)
                 else:
+                    msg = f"Line {line_number}: Expected at two values, got {len(values)}"
                     raise ValueError(
-                        f"Line {line_number}: Expected at two values, got {len(values)}"
+                        msg
                     )
 
     return left_list, right_list
