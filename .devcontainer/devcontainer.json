@@ -33,5 +33,5 @@
 			]
 		}
 	},
-	"postCreateCommand": "uv python pin $(cat .python-version) && uv sync --dev",
+	"postCreateCommand": "uv python pin $(cat .python-version) && uv sync --dev"
 }
