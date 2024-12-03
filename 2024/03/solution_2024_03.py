@@ -15,7 +15,6 @@ def find_all_instructions(memory: str) -> list[str]:
 
     Returns:
         List[str]: A list of valid instruction strings.
-
     """
     pattern = r"mul\(\d{1,3},\d{1,3}\)|do\(\)|don't\(\)"
     return re.findall(pattern, memory)
@@ -32,7 +31,6 @@ def get_mul_arguments(instruction: str) -> tuple[int, int]:
 
     Raises:
         ValueError: If the instruction is not a valid mul instruction.
-
     """
     args = instruction[4:-1]
     n1_str, n2_str = args.split(",")
@@ -49,7 +47,6 @@ def sum_mul_instructions(instructions: list[str]) -> int:
 
     Returns:
         int: The sum of the multiplication results.
-
     """
     total = 0
 
@@ -62,14 +59,13 @@ def sum_mul_instructions(instructions: list[str]) -> int:
 
 
 def sum_enabled_mul_instructions(instructions: list[str]) -> int:
-    """Calculate the sum of the results of enabled mul instructions, considering do() and don't() instructions.
+    """Calculate the sum of the results of enabled mul instructions.
 
     Args:
         instructions (List[str]): A list of instruction strings.
 
     Returns:
         int: The sum of the multiplication results of enabled mul instructions.
-
     """
     total = 0
     enabled = True
@@ -94,13 +90,13 @@ def get_input(file_path: str) -> str:
 
     Returns:
         str: The content of the file as a string.
-
     """
     with Path(file_path).open() as file:
         return file.read()
 
 
 def main() -> None:
+    """Main entry point for the application."""
     memory = get_input("input.txt")
 
     instructions = find_all_instructions(memory)

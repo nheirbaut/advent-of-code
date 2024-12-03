@@ -14,7 +14,7 @@ def test_example_input() -> None:
         [8, 6, 4, 4, 1],
         [1, 3, 6, 7, 9],
     ]
-    assert len(filter_safe_reports_without_dampening(reports)) == 2
+    assert len(filter_safe_reports_without_dampening(reports)) == 2  # noqa: PLR2004
 
 
 def test_empty_reports() -> None:
@@ -59,7 +59,7 @@ def test_report_with_difference_of_one() -> None:
         [1, 2, 3, 4, 5],  # Increasing
         [5, 4, 3, 2, 1],  # Decreasing
     ]
-    assert len(filter_safe_reports_without_dampening(reports)) == 2
+    assert len(filter_safe_reports_without_dampening(reports)) == 2  # noqa: PLR2004
 
 
 def test_report_with_difference_of_three() -> None:
@@ -68,7 +68,7 @@ def test_report_with_difference_of_three() -> None:
         [1, 4, 7, 10, 13],  # Increasing
         [13, 10, 7, 4, 1],  # Decreasing
     ]
-    assert len(filter_safe_reports_without_dampening(reports)) == 2
+    assert len(filter_safe_reports_without_dampening(reports)) == 2  # noqa: PLR2004
 
 
 def test_report_difference_out_of_bounds() -> None:
@@ -79,7 +79,7 @@ def test_report_difference_out_of_bounds() -> None:
         [5, 3, 1, -1, -3],  # Difference of 2 (safe)
         [5, 2, -1, -4, -7],  # Difference of 3 (safe)
     ]
-    assert len(filter_safe_reports_without_dampening(reports)) == 2
+    assert len(filter_safe_reports_without_dampening(reports)) == 2  # noqa: PLR2004
 
 
 def test_report_mixed_increasing_decreasing() -> None:
@@ -98,7 +98,7 @@ def test_report_with_single_level() -> None:
         [5],  # Single level (safe by default)
         [10],  # Single level (safe by default)
     ]
-    assert len(filter_safe_reports_without_dampening(reports)) == 2
+    assert len(filter_safe_reports_without_dampening(reports)) == 2  # noqa: PLR2004
 
 
 def test_report_with_two_levels_safe() -> None:
@@ -107,7 +107,7 @@ def test_report_with_two_levels_safe() -> None:
         [1, 3],  # Increasing by 2 (safe)
         [5, 2],  # Decreasing by 3 (safe)
     ]
-    assert len(filter_safe_reports_without_dampening(reports)) == 2
+    assert len(filter_safe_reports_without_dampening(reports)) == 2  # noqa: PLR2004
 
 
 def test_report_with_two_levels_unsafe() -> None:
@@ -125,7 +125,7 @@ def test_negative_levels_safe() -> None:
         [-5, -4, -3, -2, -1],  # Increasing
         [0, -1, -2, -3, -4],  # Decreasing
     ]
-    assert len(filter_safe_reports_without_dampening(reports)) == 2
+    assert len(filter_safe_reports_without_dampening(reports)) == 2  # noqa: PLR2004
 
 
 def test_negative_levels_unsafe() -> None:
@@ -145,7 +145,7 @@ def test_reports_with_zeros() -> None:
         [0, 0, 1, 2],  # Contains equal adjacent levels (unsafe)
         [0, 4, 8, 12],  # Difference of 4 (unsafe)
     ]
-    assert len(filter_safe_reports_without_dampening(reports)) == 2
+    assert len(filter_safe_reports_without_dampening(reports)) == 2  # noqa: PLR2004
 
 
 def test_large_reports() -> None:
@@ -156,7 +156,7 @@ def test_large_reports() -> None:
         list(range(0, 400, 4)),  # Difference of 4 (unsafe)
         [i**2 for i in range(1, 10)],  # Varying differences (unsafe)
     ]
-    assert len(filter_safe_reports_without_dampening(reports)) == 2
+    assert len(filter_safe_reports_without_dampening(reports)) == 2  # noqa: PLR2004
 
 
 def test_reports_with_floats() -> None:
@@ -167,7 +167,7 @@ def test_reports_with_floats() -> None:
         [1.0, 1.0, 2.0, 3.0],  # Equal adjacent levels (unsafe)
         [1.0, 4.5, 8.0],  # Difference of 3.5 (unsafe)
     ]
-    assert len(filter_safe_reports_without_dampening(reports)) == 2
+    assert len(filter_safe_reports_without_dampening(reports)) == 2  # noqa: PLR2004
 
 
 def test_example_input_with_dampening() -> None:
@@ -180,7 +180,7 @@ def test_example_input_with_dampening() -> None:
         [8, 6, 4, 4, 1],  # Safe by removing the third level, 4.
         [1, 3, 6, 7, 9],  # Safe without removing any level.
     ]
-    assert len(filter_safe_reports_with_dampening(reports)) == 4
+    assert len(filter_safe_reports_with_dampening(reports)) == 4  # noqa: PLR2004
 
 
 def test_reports_become_safe_after_removal() -> None:
@@ -190,7 +190,7 @@ def test_reports_become_safe_after_removal() -> None:
         [1, 2, 3, 3, 4, 5],  # Remove one '3' to eliminate equal adjacent levels.
         [75, 77, 72, 70, 69],  # Remove '77' to make it safe
     ]
-    assert len(filter_safe_reports_with_dampening(reports)) == 3
+    assert len(filter_safe_reports_with_dampening(reports)) == 3  # noqa: PLR2004
 
 
 def test_reports_still_unsafe_after_removal() -> None:
@@ -211,21 +211,21 @@ def test_reports_already_safe() -> None:
         [1, 4, 7, 10],  # Increasing by 3.
         [13, 10, 7, 4, 1],  # Decreasing by 3.
     ]
-    assert len(filter_safe_reports_with_dampening(reports)) == 4
+    assert len(filter_safe_reports_with_dampening(reports)) == 4  # noqa: PLR2004
 
 
 def test_reports_with_equal_adjacent_levels() -> None:
-    """Test reports that can become safe by removing a level with equal adjacent levels."""
+    """Test safe reports by removing a level with equal adjacent levels."""
     reports = [
         [1, 2, 2, 3, 4],  # Remove one '2' to fix equal levels.
         [1, 1, 2, 3, 4],  # Remove one '1'.
         [4, 4, 4, 4, 4],  # Cannot be made safe (no direction).
     ]
-    assert len(filter_safe_reports_with_dampening(reports)) == 2
+    assert len(filter_safe_reports_with_dampening(reports)) == 2  # noqa: PLR2004
 
 
 def test_reports_with_large_differences() -> None:
-    """Test reports that can become safe by removing a level causing a large difference."""
+    """Test reports that can become safe by removing with a large difference."""
     reports = [
         [1, 5, 9, 13, 17]  # Cannot be made safe (differences too large).
     ]
@@ -238,7 +238,7 @@ def test_single_level_reports() -> None:
         [5],
         [10],
     ]
-    assert len(filter_safe_reports_with_dampening(reports)) == 2
+    assert len(filter_safe_reports_with_dampening(reports)) == 2  # noqa: PLR2004
 
 
 def test_two_level_reports() -> None:
@@ -248,7 +248,7 @@ def test_two_level_reports() -> None:
         [1, 5],  # Difference of 4 (unsafe, can remove one level).
         [2, 2],  # Equal levels (unsafe, can remove one level).
     ]
-    assert len(filter_safe_reports_with_dampening(reports)) == 3
+    assert len(filter_safe_reports_with_dampening(reports)) == 3  # noqa: PLR2004
 
 
 def test_reports_with_negative_levels() -> None:
@@ -257,7 +257,7 @@ def test_reports_with_negative_levels() -> None:
         [-1, -2, -3, -4, -5],  # Decreasing (safe).
         [-5, -4, -3, -2, -1],  # Increasing (safe).
     ]
-    assert len(filter_safe_reports_with_dampening(reports)) == 2
+    assert len(filter_safe_reports_with_dampening(reports)) == 2  # noqa: PLR2004
 
 
 def test_reports_with_zeros_using_dampening() -> None:
@@ -282,7 +282,7 @@ def test_large_reports_with_dampening() -> None:
             *list(range(51, 100)),
         ],  # Remove '25' to fix direction change.
     ]
-    assert len(filter_safe_reports_with_dampening(reports)) == 3
+    assert len(filter_safe_reports_with_dampening(reports)) == 3  # noqa: PLR2004
 
 
 def test_reports_that_cannot_be_fixed() -> None:

@@ -19,7 +19,6 @@ def calculate_total_distance(left_list: list[int], right_list: list[int]) -> int
 
     Raises:
         ValueError: If the input lists are not of the same length.
-
     """
     if len(left_list) != len(right_list):
         msg = "Lists must be of the same length"
@@ -39,7 +38,7 @@ def calculate_similarity_score(left_list: list[int], right_list: list[int]) -> i
 
     The similarity score is computed by:
     - Counting the frequency of each number in the right list.
-    - For each number in the left list, multiplying it by its frequency in the right list.
+    - Multiplying each number in the left list with the frequency in the right list,
     - Summing these products.
 
     Args:
@@ -48,7 +47,6 @@ def calculate_similarity_score(left_list: list[int], right_list: list[int]) -> i
 
     Returns:
         int: The similarity score between the two lists.
-
     """
     frequency_table = Counter(right_list)
     return sum(num * frequency_table.get(num, 0) for num in left_list)
@@ -69,17 +67,16 @@ def read_columns(file_path: str) -> tuple[list[int], list[int]]:
     Raises:
         ValueError: If a line does not contain two integers.
         ValueError: If a value cannot be converted to an integer.
-
     """
     left_list: list[int] = []
     right_list: list[int] = []
 
     with Path(file_path).open() as file:
         for line_number, line in enumerate(file, start=1):
-            line = line.strip()
+            stripped_line = line.strip()
             if line:
-                values = line.split()
-                if len(values) == 2:
+                values = stripped_line.split()
+                if len(values) == 2:  # noqa: PLR2004
                     try:
                         left_value = int(values[0])
                         right_value = int(values[1])
@@ -87,7 +84,7 @@ def read_columns(file_path: str) -> tuple[list[int], list[int]]:
                         right_list.append(right_value)
                     except ValueError as e:
                         msg = f"Line {line_number}: {e}"
-                        raise ValueError(msg)
+                        raise ValueError(msg)  # noqa: B904
                 else:
                     msg = (
                         f"Line {line_number}: Expected at two values, got {len(values)}"
@@ -98,7 +95,7 @@ def read_columns(file_path: str) -> tuple[list[int], list[int]]:
 
 
 def main() -> None:
-    """Main function to read input data, calculate total distance and similarity score, and print the results."""
+    """Main entry point for the application."""
     try:
         left_list, right_list = read_columns("input.txt")
         total_distance = calculate_total_distance(left_list, right_list)
@@ -106,7 +103,7 @@ def main() -> None:
 
         similarity_score = calculate_similarity_score(left_list, right_list)
         print(f"Similarity score: {similarity_score}")
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001
         print(f"Error: {e}")
 
 

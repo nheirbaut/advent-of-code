@@ -57,12 +57,12 @@ def is_safe_report_with_dampening(report: list[int]) -> bool:
 
 
 def filter_safe_reports_without_dampening(reports: list[list[int]]) -> list[list[int]]:
-    """Filter and return the list of safe reports without applying the Problem Dampener."""
+    """Filter and return the list of safe reports without applying the Dampener."""
     return [report for report in reports if is_safe_report_without_dampening(report)]
 
 
 def filter_safe_reports_with_dampening(reports: list[list[int]]) -> list[list[int]]:
-    """Filter and return the list of safe reports, applying the Problem Dampener."""
+    """Filter and return the list of safe reports, applying the Dampener."""
     return [report for report in reports if is_safe_report_with_dampening(report)]
 
 
@@ -72,9 +72,9 @@ def read_reports(file_path: str) -> list[list[int]]:
 
     with Path(file_path).open(file_path) as file:
         for line in file:
-            line = line.strip()
+            stripped_line = line.strip()
             if line:
-                reports.append(list(map(int, line.split())))
+                reports.append(list(map(int, stripped_line.split())))
 
     return reports
 
