@@ -20,7 +20,8 @@
 				"tamasfe.even-better-toml",
 				"usernamehw.errorlens",
 				"yzhang.markdown-all-in-one",
-				"njpwerner.autodocstring"
+				"njpwerner.autodocstring",
+				"DavidAnson.vscode-markdownlint"
 			]
 		}
 	},
