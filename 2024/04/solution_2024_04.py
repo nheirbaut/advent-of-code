@@ -126,6 +126,54 @@ def count_number_of_occurrences(word_search: list[str], word: str) -> int:
     return total_occurrences
 
 
+def count_number_of_x_mas_occurrences(word_search: list[str], word: str) -> int:
+    """Count the number of X-MAS occurrences.
+
+    Args:
+        word_search (list[str]): The puzzle to search in
+        word (str): The word to find the occurrences for
+
+    Returns:
+        int: The number of X-MAS occurrences of the word
+    """
+    if len(word) % 2 == 0:
+        # Must have a character in the middle
+        return 0
+
+    middle_char = word[len(word) // 2]
+
+    total_occurrences = 0
+
+    number_of_lines = len(word_search)
+    number_of_columns = len(word_search[0])
+
+    for line_index in range(1, number_of_lines - 1):
+        for column_index in range(1, number_of_columns - 1):
+            if word_search[line_index][column_index] == middle_char:
+                center_character = "A"
+                upper_left_character = word_search[line_index - 1][column_index - 1]
+                upper_right_character = word_search[line_index - 1][column_index + 1]
+                bottom_left_character = word_search[line_index + 1][column_index - 1]
+                bottom_right_character = word_search[line_index + 1][column_index + 1]
+
+                found_word1 = (
+                    upper_left_character + center_character + bottom_right_character
+                )
+                found_word1_reversed = found_word1[::-1]
+
+                found_word2 = (
+                    upper_right_character + center_character + bottom_left_character
+                )
+                found_word2_reversed = found_word2[::-1]
+
+                if (word in (found_word1, found_word1_reversed)) and (
+                    word in (found_word2, found_word2_reversed)
+                ):
+                    total_occurrences += 1
+
+    return total_occurrences
+
+
 def get_input(file_path: str) -> list[str]:
     """Read the word search puzzle from file.
 
@@ -142,10 +190,13 @@ def get_input(file_path: str) -> list[str]:
 
 def main() -> None:
     """Main entry point for the application."""
-    word_search = get_input("/workspaces/advent-of-code/2024/04/input.txt")
+    word_search = get_input("input.txt")
 
-    number_of_occurrences = count_number_of_occurrences(word_search, "XMAS")
-    print(f"Number of XMAS occurrences = {number_of_occurrences}")
+    number_of_xmas_occurrences = count_number_of_occurrences(word_search, "XMAS")
+    print(f"Number of XMAS occurrences = {number_of_xmas_occurrences}")
+
+    number_of_x_mas_occurrences = count_number_of_x_mas_occurrences(word_search, "MAS")
+    print(f"Number of X-MAS occurrences = {number_of_x_mas_occurrences}")
 
 
 if __name__ == "__main__":
