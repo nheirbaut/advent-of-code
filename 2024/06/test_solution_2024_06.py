@@ -1,12 +1,12 @@
 from solution_2024_06 import (
-    create_lab_layout_from_lines,
-    get_number_of_distinct_moves,
-    walk_to_outside_of_lab,
+    find_exit_path,
+    prevent_guard_from_moving_out,
 )
+from utils.grid import create_grid_from_lines
 
 
-def test_example_puzzle_input() -> None:
-    """Test the example input from the puzzle."""
+def test_example_puzzle_input_for_succesful_exit() -> None:
+    """Test the example input from the puzzle for succesful exit."""
     test_lab_layout_str = [
         "....#.....",
         ".........#",
@@ -19,6 +19,25 @@ def test_example_puzzle_input() -> None:
         "#.........",
         "......#...",
     ]
-    test_lab_layout = create_lab_layout_from_lines(test_lab_layout_str)
-    walk_to_outside_of_lab(test_lab_layout)
-    assert get_number_of_distinct_moves(test_lab_layout) == 41  # noqa: PLR2004
+    test_lab_grid = create_grid_from_lines(test_lab_layout_str)
+    exited, path = find_exit_path(test_lab_grid)
+    assert exited
+    assert len(path) == 41  # noqa: PLR2004
+
+
+def test_example_puzzle_input_for_added_obstacles() -> None:
+    """Test the example input from the puzzle for added obstacles."""
+    test_lab_layout_str = [
+        "....#.....",
+        ".........#",
+        "..........",
+        "..#.......",
+        ".......#..",
+        "..........",
+        ".#..^.....",
+        "........#.",
+        "#.........",
+        "......#...",
+    ]
+    test_lab_grid = create_grid_from_lines(test_lab_layout_str)
+    assert prevent_guard_from_moving_out(test_lab_grid) == 6  # noqa: PLR2004

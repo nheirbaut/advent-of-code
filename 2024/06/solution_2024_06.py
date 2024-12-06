@@ -1,124 +1,121 @@
+from itertools import cycle
 from pathlib import Path
 
+from utils.grid import Grid, Point, create_grid_from_lines, find_first_point_for_value
 
-def create_lab_layout_from_lines(lines: list[str]) -> list[list[str]]:
-    """Create a character based lab layout from lines.
+type DirectionDelta = tuple[int, int]
+type DirectionDeltas = list[DirectionDelta]
+
+
+def add_delta_to_point(point: Point, delta: Point) -> Point:
+    """Add given delta to given point.
 
     Args:
-        lines (list[str]): The lines to create the layout from
+        point (Point): Point to add to
+        delta (Point): Delta to add
 
     Returns:
-        list[list[str]]: The lab layout
+        Point: The adjusted point
     """
-    return [list(line) for line in lines]
+    return point[0] + delta[0], point[1] + delta[1]
 
 
-def get_lab_layout_from_file(file_path: str) -> list[list[str]]:
-    """Get the layout of the lab from a file.
+def find_exit_path(lab_grid: Grid) -> tuple[bool, set[Point]]:
+    """Find a possible exit path.
 
     Args:
-        file_path (str): The file defining the lab layout
+        lab_grid (Grid): The grid to find the exit from
 
     Returns:
-        list[str]: The layout of the lab
-    """
-    with Path(file_path).open() as file:
-        all_lines = file.readlines()
-        all_lines = [line.rstrip() for line in all_lines]
-
-        return create_lab_layout_from_lines(all_lines)
-
-
-def find_start_position(lab_layout: list[list[str]]) -> tuple[int, int]:
-    """Find te start position in the lab.
-
-    Args:
-        lab_layout (list): The lab layout
-
-    Returns:
-        tuple[int, int]: The lin index and character position of the starting point
-    """
-    for line_index, line in enumerate(lab_layout):
-        for char_index, char in enumerate(line):
-            if char == "^":
-                return line_index, char_index
-
-    return 0, 0
-
-
-def walk_to_outside_of_lab(lab_layout: list[list[str]]) -> None:
-    """Walk to the outside of the lab.
-
-    Args:
-        lab_layout (list[list[str]]): The lab layout
+        tuple[bool, set[Point]]: True and the path when exited,
+          False and an empty set otherwise
     """
     up_delta = (0, -1)
     down_delta = (0, 1)
     left_delta = (-1, 0)
     right_delta = (1, 0)
 
-    possible_directions: list[tuple[int, int]] = [
-        up_delta,
-        right_delta,
-        down_delta,
-        left_delta,
-    ]
+    possible_direction_deltas: cycle[DirectionDelta] = cycle(
+        [
+            up_delta,
+            right_delta,
+            down_delta,
+            left_delta,
+        ]
+    )
 
-    line_position, char_position = find_start_position(lab_layout)
+    current_direction_delta = next(possible_direction_deltas)
 
-    current_direction_index = 0
-    person_is_outside_the_lab = False
+    current_location = find_first_point_for_value(lab_grid, "^")
+    assert current_location is not None
 
-    while not person_is_outside_the_lab:
-        next_line_position = (
-            line_position + possible_directions[current_direction_index][1]
-        )
-        next_char_position = (
-            char_position + possible_directions[current_direction_index][0]
-        )
+    visited_locations_from_direction: set[tuple[Point, DirectionDelta]] = {
+        (current_location, current_direction_delta)
+    }
 
-        # Determine blockage
-        if lab_layout[next_line_position][next_char_position] == "#":
-            current_direction_index += 1
-
-            if current_direction_index == len(possible_directions):
-                current_direction_index = 0
-
-            continue
-
-        # No blockage, move forward
-        lab_layout[line_position][char_position] = "X"
-        line_position = next_line_position
-        char_position = next_char_position
-
-        # See if we moved outside
-        if (
-            line_position < 0
-            or line_position >= len(lab_layout)
-            or char_position < 0
-            or char_position >= len(lab_layout[0])
-        ):
+    while True:
+        next_location = add_delta_to_point(current_location, current_direction_delta)
+        if next_location not in lab_grid:
+            # Moved out of the lab
             break
 
+        if lab_grid[next_location] == "#":
+            current_direction_delta = next(possible_direction_deltas)
+            visited_locations_from_direction.add(
+                (current_location, current_direction_delta)
+            )
+            continue
 
-def get_number_of_distinct_moves(lab_layout: list[list[str]]) -> int:
-    """Get the number of distinct movements within the lab.
+        if (next_location, current_direction_delta) in visited_locations_from_direction:
+            # Been here before from the same direction, so stuck in a loop
+            return False, set()
+
+        visited_locations_from_direction.add((next_location, current_direction_delta))
+        current_location = next_location
+
+    return True, {location for location, _ in visited_locations_from_direction}
+
+
+def prevent_guard_from_moving_out(lab_grid: Grid) -> int:
+    """Prevent the guard from moving out of the lab by adding obstacles.
 
     Args:
-        lab_layout (list[list[str]]): The lab layout with movements
+        lab_grid (Grid): A grid describing the lab
 
     Returns:
-        int: The total number of distinct movements
+        int: The number of obstacles added
     """
-    return sum(line.count("X") for line in lab_layout)
+    exited, succesful_exit_path = find_exit_path(lab_grid)
+    assert exited
+
+    possible_obstacle_locations = 0
+    for current_location in succesful_exit_path:
+        if lab_grid[current_location] == "^":
+            continue
+
+        lab_grid[current_location] = "#"
+        exited, _ = find_exit_path(lab_grid)
+        if not exited:
+            possible_obstacle_locations += 1
+
+        lab_grid[current_location] = "."
+
+    return possible_obstacle_locations
 
 
 def main() -> None:
     """Main entry point for the application."""
-    lab_layout = get_lab_layout_from_file("input.txt")
-    walk_to_outside_of_lab(lab_layout)
-    distinct_steps = get_number_of_distinct_moves(lab_layout)
-    print(f"Number of distinct steps: {distinct_steps}")
+    lines: list[str] = []
+    with Path("input.txt").open() as file:
+        lines = [line.rstrip() for line in file]
+
+    lab_grid = create_grid_from_lines(lines)
+    _, path = find_exit_path(lab_grid)
+    print(f"Number of distinct steps: {len(path)}")
+
+    lab_grid = create_grid_from_lines(lines)
+    obstacles_added = prevent_guard_from_moving_out(lab_grid)
+    print(f"Obstacles added: {obstacles_added}")
 
 
 if __name__ == "__main__":
