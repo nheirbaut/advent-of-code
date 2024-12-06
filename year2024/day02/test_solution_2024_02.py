@@ -1,4 +1,4 @@
-from solution_2024_02 import (
+from year2024.day02.solution_2024_02 import (
     filter_safe_reports_with_dampening,
     filter_safe_reports_without_dampening,
 )

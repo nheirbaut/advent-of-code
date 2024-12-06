@@ -1,4 +1,4 @@
-from solution_2024_03 import (
+from year2024.day03.solution_2024_03 import (
     find_all_instructions,
     sum_enabled_mul_instructions,
     sum_mul_instructions,

@@ -1,4 +1,4 @@
-from solution_2024_04 import (
+from year2024.day04.solution_2024_04 import (
     count_number_of_occurrences,
     count_number_of_x_mas_occurrences,
 )

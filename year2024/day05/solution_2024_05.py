@@ -139,7 +139,9 @@ def get_corrected_updates(
 
             for required_after in before_rules_for_page:
                 if required_after in corrected_update:
-                    index_of_page_required_after = corrected_update.index(required_after)
+                    index_of_page_required_after = corrected_update.index(
+                        required_after
+                    )
                     index.append(index_of_page_required_after)
 
             if index:

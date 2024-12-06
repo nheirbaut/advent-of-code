@@ -1,5 +1,9 @@
 import pytest
-from solution_2024_01 import calculate_similarity_score, calculate_total_distance
+
+from year2024.day01.solution_2024_01 import (
+    calculate_similarity_score,
+    calculate_total_distance,
+)
 
 # Tests for calculate_similarity_score
 

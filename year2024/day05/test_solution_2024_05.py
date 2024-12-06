@@ -1,4 +1,4 @@
-from solution_2024_05 import (
+from year2024.day05.solution_2024_05 import (
     get_corrected_updates,
     get_rules_from_lines,
     get_updates_from_lines,

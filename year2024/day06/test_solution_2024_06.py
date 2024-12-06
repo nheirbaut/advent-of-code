@@ -1,8 +1,8 @@
-from solution_2024_06 import (
+from utils.grid import create_grid_from_lines
+from year2024.day06.solution_2024_06 import (
     find_exit_path,
     prevent_guard_from_moving_out,
 )
-from utils.grid import create_grid_from_lines
 
 
 def test_example_puzzle_input_for_succesful_exit() -> None:
