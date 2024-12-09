@@ -1,9 +1,15 @@
 from collections.abc import Callable
 from pathlib import Path
 
-OPERATIONS: list[Callable[[int, int], int]] = [
+OPERATIONS_PART1: list[Callable[[int, int], int]] = [
     lambda x, y: x + y,  # '+' operator
     lambda x, y: x * y,  # '*' operator
+]
+
+OPERATIONS_PART2: list[Callable[[int, int], int]] = [
+    lambda x, y: x + y,  # '+' operator
+    lambda x, y: x * y,  # '*' operator
+    lambda x, y: int(f"{x}{y}"),  # '||' operator
 ]
 
 
@@ -11,6 +17,7 @@ def try_find_successful_solution(
     total: int,
     numbers: list[int],
     already_known_good_or_bad_totals: dict[tuple[tuple[int, ...], int], bool],
+    operations: list[Callable[[int, int], int]],
 ) -> int | None:
     """Try to find a succesfull solution recursively.
 
@@ -19,6 +26,7 @@ def try_find_successful_solution(
         numbers (list[int]): The numbers to try the operations on
         already_known_good_or_bad_totals (dict[tuple[tuple[int, ...], int], bool]):
             already known good and bad combinations
+        operations (list[Callable[[int, int], int]]): The allowed operations
 
     Returns:
         int | None: The found total if possible, None otherwise
@@ -32,11 +40,11 @@ def try_find_successful_solution(
 
     first, second = numbers[0], numbers[1]
 
-    for operation in OPERATIONS:
+    for operation in operations:
         new_numbers: list[int] = [operation(first, second)] + numbers[2:]
 
         if try_find_successful_solution(
-            total, new_numbers, already_known_good_or_bad_totals
+            total, new_numbers, already_known_good_or_bad_totals, operations
         ):
             already_known_good_or_bad_totals[current_total_and_numbers] = True
             return total
@@ -46,12 +54,16 @@ def try_find_successful_solution(
     return None
 
 
-def get_sum_total(totals_and_numbers: list[tuple[int, list[int]]]) -> int:
+def get_sum_total(
+    totals_and_numbers: list[tuple[int, list[int]]],
+    operations: list[Callable[[int, int], int]],
+) -> int:
     """Get the sum total for all valid solutions.
 
     Args:
         totals_and_numbers (list[tuple[int, list[int]]]):
             The list of totals and their possible solution numbers
+        operations (list[Callable[[int, int], int]]): The allowed operations
 
     Returns:
         int: The total for all valid solutions
@@ -60,7 +72,7 @@ def get_sum_total(totals_and_numbers: list[tuple[int, list[int]]]) -> int:
 
     for total, numbers in totals_and_numbers:
         memo: dict[tuple[tuple[int, ...], int], bool] = {}
-        if try_find_successful_solution(total, numbers, memo):
+        if try_find_successful_solution(total, numbers, memo, operations):
             sum_total += total
 
     return sum_total
@@ -102,14 +114,16 @@ def parse_lines(lines: list[str]) -> list[tuple[int, list[int]]]:
 def main() -> None:
     """Main entry point for this application."""
     lines = read_all_lines_from_file(
-        "input.txt"
+        "/workspaces/advent-of-code/year2024/day07/input.txt"
     )
 
     totals_and_numbers = parse_lines(lines)
 
-    sum_total = get_sum_total(totals_and_numbers)
-
+    sum_total = get_sum_total(totals_and_numbers, OPERATIONS_PART1)
     print(f"Solution Part 1: {sum_total}")
+
+    sum_total = get_sum_total(totals_and_numbers, OPERATIONS_PART2)
+    print(f"Solution Part 2: {sum_total}")
 
 
 if __name__ == "__main__":
